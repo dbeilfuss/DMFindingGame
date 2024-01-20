@@ -13,12 +13,8 @@ class WelcomeScreenViewController: UIViewController {
         super.viewDidLoad()
     }
     
-<<<<<<< HEAD
-=======
     @IBAction func newGameButtonTapped(_ sender: UIButton) {
         self.performSegue(withIdentifier: "welcomeToGame", sender: self)
     }
     
-    
->>>>>>> CreateWelcomeScreen
 }

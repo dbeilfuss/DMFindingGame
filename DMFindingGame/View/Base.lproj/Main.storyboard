@@ -17,7 +17,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-<<<<<<< HEAD
+
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mEd-1M-2aW">
                                 <rect key="frame" x="63" y="670" width="267.66666666666674" height="68.666666666666515"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -33,7 +33,7 @@
                     </view>
                     <connections>
                         <segue destination="cLM-BX-Ev8" kind="presentation" identifier="welcomeToGameSegue" id="FHL-ty-X7A"/>
-=======
+CreateWelcomeScreen
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="HWc-mu-av9">
                                 <rect key="frame" x="0.0" y="59" width="393" height="793"/>
                                 <subviews>
@@ -99,6 +99,9 @@
                     </view>
                     <connections>
                         <segue destination="cLM-BX-Ev8" kind="presentation" identifier="welcomeToGame" id="FHL-ty-X7A"/>
+<<<<<<< HEAD
+>>>>>>> CreateWelcomeScreen
+=======
 >>>>>>> CreateWelcomeScreen
                     </connections>
                 </viewController>
@@ -138,8 +141,13 @@
                                         <rect key="frame" x="135" y="73.333333333333314" width="123" height="237"/>
                                         <subviews>
 <<<<<<< HEAD
+<<<<<<< HEAD
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="DMFinding" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I0C-K5-iv0">
                                                 <rect key="frame" x="-63.333333333333329" y="86.000000000000014" width="249.66666666666663" height="64.999999999999986"/>
+=======
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="M" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I0C-K5-iv0">
+                                                <rect key="frame" x="37.333333333333343" y="86.000000000000014" width="48.333333333333343" height="64.999999999999986"/>
+>>>>>>> CreateWelcomeScreen
 =======
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="M" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I0C-K5-iv0">
                                                 <rect key="frame" x="37.333333333333343" y="86.000000000000014" width="48.333333333333343" height="64.999999999999986"/>
