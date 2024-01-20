@@ -21,8 +21,7 @@ class GameViewController: UIViewController {
         super.viewDidLoad()
         gameModel.newGame()
         goalLabel.text = "Goal: \(gameModel.goal)"
-        targetLetterLabel.text = ""
-        resetGameScreen(didWin: true)
+        newRound(didAnswerCorrectly: true)
     }
     
     func resetGameScreen(didWin: Bool) {
