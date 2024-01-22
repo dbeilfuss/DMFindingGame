@@ -14,33 +14,53 @@ class GameModel {
     let alphabet = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
     
     var letters = [String]()
+    var lettersNeeded = 9
     var targetLetter = ""
-    var score = 0
+    var roundScore = 0
+    var gameScore = 0
     var goal = 5
+    var round = 1
+    var secondsOnTheClock = 15
+    var secondsRemaining = 0
+    var timer: Timer?
+    var updateTimerLabel: ((Int) -> Void)? // Callback
     
-    func newGame() {
-        score = 0
-        print("score: \(score)")
-        newRound()
-    }
+    let gameChangeMessage = [
+    "15 Seconds on the Clock",
+    "Adding More Letters",
+    "Adding More Letters",
+    "Adding More Letters",
+    "Adding More Letters",
+    "Less Time"
+    ]
     
     func newRound() {
-        letters = generateRandomLetters(numLetters: 9)
+        print("GM: newRound: round: \(round)")
+        roundScore = 0
+        newHand()
+        setTimer(secondsOnTheClock: secondsOnTheClock)
+    }
+    
+    func newHand() {
+        letters = generateRandomLetters(numLetters: lettersNeeded)
         
         if letters.count > 1 {
             targetLetter = letters.randomElement()!
         }
         
+        
     }
     
     func nextLetter() -> String {
         let letterAndUpdatedArray = drawFromArray(array: letters)
+        print("letterAndUpdateArray: \(letterAndUpdatedArray)")
         let nextLetter = letterAndUpdatedArray[0][0]
         letters = letterAndUpdatedArray[1]
         return nextLetter
     }
     
     func generateRandomLetters(numLetters: Int) -> [String] {
+        print("generating \(numLetters) letters")
         
         var remainingLetters = alphabet
         var randomLetters = [String]()
@@ -77,7 +97,8 @@ class GameModel {
     
     func checkAnswer(answer: String) -> Bool {
         if answer == targetLetter {
-            score += 1
+            gameScore += round
+            roundScore += 1
             print("Correct")
             return true
         } else {
@@ -87,8 +108,11 @@ class GameModel {
     }
     
     func checkForWin() -> Bool {
-        if score >= goal {
+        if roundScore >= goal {
             print("Win")
+            round += 1
+            timer?.invalidate()
+            if round > 6 { secondsOnTheClock -= 2 }
             return true
         } else {
             print("Not a Win")
@@ -109,6 +133,26 @@ class GameModel {
         }
         
         return emoji
+    }
+    
+    func setTimer(secondsOnTheClock: Int) {
+        
+        timer?.invalidate() // kill the timer if it is already running
+        
+        secondsRemaining = secondsOnTheClock
+
+        timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateTimer), userInfo: nil, repeats: true)
+    }
+    
+    @objc func updateTimer() {
+        updateTimerLabel?(secondsRemaining)
+        if secondsRemaining > 0 {
+//            print("secondsRemaining: \(secondsRemaining)")
+            secondsRemaining -= 1
+        } else {
+            timer?.invalidate()
+            print ("Time's Up!")
+        }
     }
     
 }
