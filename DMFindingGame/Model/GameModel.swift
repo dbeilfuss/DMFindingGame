@@ -31,6 +31,7 @@ class GameModel {
     "Adding More Letters",
     "Adding More Letters",
     "Adding More Letters",
+    "Adding More Letters",
     "Less Time"
     ]
     
@@ -112,7 +113,7 @@ class GameModel {
             print("Win")
             round += 1
             timer?.invalidate()
-            if round > 6 { secondsOnTheClock -= 2 }
+            if round > 7 { secondsOnTheClock -= 2 }
             return true
         } else {
             print("Not a Win")
