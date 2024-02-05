@@ -29,7 +29,7 @@ class RoundManager {
         RoundData(round: 4, secondsOnTheClock: 15, roundChangeMessage: "Adding More Letters", pointValue: 5),
         RoundData(round: 5, secondsOnTheClock: 15, roundChangeMessage: "Adding More Letters", pointValue: 7),
         RoundData(round: 6, secondsOnTheClock: 15, roundChangeMessage: "Adding More Letters", pointValue: 10),
-        RoundData(round: 7, secondsOnTheClock: 15, roundChangeMessage: "Adding More Letters", pointValue: 12),
+        RoundData(round: 7, secondsOnTheClock: 15, roundChangeMessage: "Less Time", pointValue: 12),
         RoundData(round: 8, secondsOnTheClock: 13, roundChangeMessage: "Less Time", pointValue: 15),
         RoundData(round: 9, secondsOnTheClock: 11, roundChangeMessage: "Less Time", pointValue: 20),
         RoundData(round: 10, secondsOnTheClock: 9, roundChangeMessage: "Less Time", pointValue: 35),
