@@ -14,6 +14,10 @@
 		6377941029A31E0A00D08D42 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6377940F29A31E0A00D08D42 /* Assets.xcassets */; };
 		6377941329A31E0A00D08D42 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6377941129A31E0A00D08D42 /* LaunchScreen.storyboard */; };
 		7729AA092B5A18990082278E /* WelcomeScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7729AA082B5A18990082278E /* WelcomeScreenViewController.swift */; };
+		772B4ABB2B70499C0097E639 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 772B4ABA2B70499C0097E639 /* CoreDataManager.swift */; };
+		772B4ABD2B704AC00097E639 /* RoundManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 772B4ABC2B704AC00097E639 /* RoundManager.swift */; };
+		772B4ABF2B7064F60097E639 /* TimerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 772B4ABE2B7064F60097E639 /* TimerManager.swift */; };
+		772B4AC12B7068870097E639 /* HandManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 772B4AC02B7068870097E639 /* HandManager.swift */; };
 		777E58E92B577EE600AADB88 /* DMFindingGameTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F098E129B046BE00B97BC2 /* DMFindingGameTests.swift */; };
 		77E3E16D2B53199000CA1DFC /* GameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E3E16C2B53199000CA1DFC /* GameModel.swift */; };
 /* End PBXBuildFile section */
@@ -40,6 +44,10 @@
 		63F098DF29B046BE00B97BC2 /* DMFindingGameTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DMFindingGameTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		63F098E129B046BE00B97BC2 /* DMFindingGameTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMFindingGameTests.swift; sourceTree = "<group>"; };
 		7729AA082B5A18990082278E /* WelcomeScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeScreenViewController.swift; sourceTree = "<group>"; };
+		772B4ABA2B70499C0097E639 /* CoreDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
+		772B4ABC2B704AC00097E639 /* RoundManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundManager.swift; sourceTree = "<group>"; };
+		772B4ABE2B7064F60097E639 /* TimerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerManager.swift; sourceTree = "<group>"; };
+		772B4AC02B7068870097E639 /* HandManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandManager.swift; sourceTree = "<group>"; };
 		77E3E16C2B53199000CA1DFC /* GameModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -105,6 +113,10 @@
 			isa = PBXGroup;
 			children = (
 				77E3E16C2B53199000CA1DFC /* GameModel.swift */,
+				772B4ABC2B704AC00097E639 /* RoundManager.swift */,
+				772B4ABE2B7064F60097E639 /* TimerManager.swift */,
+				772B4AC02B7068870097E639 /* HandManager.swift */,
+				772B4ABA2B70499C0097E639 /* CoreDataManager.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -230,9 +242,13 @@
 			files = (
 				7729AA092B5A18990082278E /* WelcomeScreenViewController.swift in Sources */,
 				6377940B29A31E0900D08D42 /* GameViewController.swift in Sources */,
+				772B4AC12B7068870097E639 /* HandManager.swift in Sources */,
 				77E3E16D2B53199000CA1DFC /* GameModel.swift in Sources */,
 				6377940729A31E0900D08D42 /* AppDelegate.swift in Sources */,
+				772B4ABD2B704AC00097E639 /* RoundManager.swift in Sources */,
 				777E58E92B577EE600AADB88 /* DMFindingGameTests.swift in Sources */,
+				772B4ABF2B7064F60097E639 /* TimerManager.swift in Sources */,
+				772B4ABB2B70499C0097E639 /* CoreDataManager.swift in Sources */,
 				6377940929A31E0900D08D42 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

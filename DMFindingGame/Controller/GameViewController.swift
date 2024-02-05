@@ -24,16 +24,23 @@ class GameViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        initializeUIViews()
+        initializeGame()
+    }
+    
+    func initializeUIViews(){
         hideViews(views: letterButtons)
-        activeLetterButtons = getActiveLetterButtons()
+        activeLetterButtons = getActiveLetterButtons(round: 1)
         resetGameScreen(didWin: false)
-        gameModel.newHand()
+    }
+    
+    func initializeGame() {
 //        goalLabel.text = "Goal: \(gameModel.goal)"
-        newHand(didAnswerCorrectly: true)
-        timerLabel.text = "Find 5 Letters"
+        gameModel.newRound(lettersNeeded: activeLetterButtons.count)
+        self.newHand(didAnswerCorrectly: true)
         
         // Timer Callback
-        gameModel.updateTimerLabel = { [weak self] secondsRemaining in DispatchQueue.main.async {
+        gameModel.timerManager.updateTimerLabel = { [weak self] secondsRemaining in DispatchQueue.main.async {
             if secondsRemaining > 0 {
                 
                 // update timerLabel
@@ -46,7 +53,6 @@ class GameViewController: UIViewController {
             }
         }
         }
-        
     }
     
     func resetGameScreen(didWin: Bool) {
@@ -56,10 +62,10 @@ class GameViewController: UIViewController {
         if didWin {
             revealViews(views: controlButtons)
             hideViews(views: letterButtons)
+            timerLabel.text = gameModel.roundChangeMessage
         } else {
             hideViews(views: controlButtons)
             revealViews(views: activeLetterButtons)
-            gameModel.lettersNeeded = activeLetterButtons.count
         }
         updateScoreLabel()
     }
@@ -80,26 +86,27 @@ class GameViewController: UIViewController {
     
     func newHand(didAnswerCorrectly: Bool) {
         print("VC: newHand")
-        gameModel.newHand()
-        updateTargetLetterLabel(didAnswerCorrectly: didAnswerCorrectly)
-        updateLetterButtons()
-//        hideViews(views: [doneButton, nextRoundButton])
+        let newHand: Hand = gameModel.newHand(lettersNeededCount: activeLetterButtons.count)
+        updateTargetLetterLabel(didAnswerCorrectly: didAnswerCorrectly, targetLetter: newHand.targetLetter)
+        updateLetterButtons(letters: newHand.availableLetters)
     }
     
-    func updateTargetLetterLabel(didAnswerCorrectly: Bool) {
+    func updateTargetLetterLabel(didAnswerCorrectly: Bool, targetLetter: String) {
         print("updating target letter label: didAnswerCorrectly: \(didAnswerCorrectly)")
         let responseEmoji = gameModel.responseEmoji(didAnswerCorrectly: didAnswerCorrectly)
         
         timerLabel.text = responseEmoji
         
-        targetLetterLabel.text = gameModel.targetLetter
+        targetLetterLabel.text = targetLetter
         
     }
     
-    func updateLetterButtons() {
-        print("updating letter Buttons \(activeLetterButtons.count) times")
+    func updateLetterButtons(letters: [String]) {
+        print("updating letter Buttons")
+        var i = 0
         for button in activeLetterButtons {
-            button.setTitle(gameModel.nextLetter(), for: .normal)
+            button.setTitle(letters[i], for: .normal)
+            i += 1
             button.tintColor = UIColor.systemBlue
         }
     }
@@ -108,21 +115,23 @@ class GameViewController: UIViewController {
         scoreLabel.text = "Score: \(gameModel.gameScore)"
     }
     
-    func getActiveLetterButtons() -> [UIButton] {
+    func getActiveLetterButtons(round: Int) -> [UIButton] {
         print("getting active letter buttons")
-        let activeButtons = letterButtons.filter { $0.tag <= gameModel.round }
+        let activeButtons = letterButtons.filter { $0.tag <= round }
         return activeButtons
     }
     
     
+    //MARK: - Buttons
     
     @IBAction func letterButtonTapped(_ sender: UIButton) {
         
         if timesUp != true {
             
             let answer: String = (sender.titleLabel?.text!)!
+            let targetLetter: String = self.targetLetterLabel.text!
             
-            let isCorrect = gameModel.checkAnswer(answer: answer)
+            let isCorrect = gameModel.checkAnswer(answer: answer, targetLetter: targetLetter)
             let didWin = gameModel.checkForWin()
             
             if didWin {
@@ -130,17 +139,7 @@ class GameViewController: UIViewController {
                 // Victory Message
                 let victoryMessage = "\(gameModel.responseEmoji(didAnswerCorrectly: true))\(gameModel.responseEmoji(didAnswerCorrectly: true))\(gameModel.responseEmoji(didAnswerCorrectly: true))"
                 targetLetterLabel.text = victoryMessage
-                
-                var messageNumber = Int()
-                
-                if (gameModel.round - 1) > gameModel.gameChangeMessage.count {
-                    messageNumber = gameModel.gameChangeMessage.count - 1
-                } else {
-                    messageNumber = gameModel.round - 2
-                }
-                
-                timerLabel.text = gameModel.gameChangeMessage[messageNumber]
-                
+                                                
             }
             else {
                 newHand(didAnswerCorrectly: isCorrect)
@@ -165,9 +164,9 @@ class GameViewController: UIViewController {
     }
     
     @IBAction func nextRoundButtonTapped(_ sender: UIButton) {
-        activeLetterButtons = getActiveLetterButtons()
+        gameModel.newRound(lettersNeeded: activeLetterButtons.count)
+        activeLetterButtons = getActiveLetterButtons(round: gameModel.round)
         resetGameScreen(didWin: false)
-        gameModel.newRound()
         newHand(didAnswerCorrectly: true)
     }
     
