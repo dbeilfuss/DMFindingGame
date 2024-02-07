@@ -23,8 +23,8 @@ struct RoundData {
 
 class RoundManager {
     let roundsList: [RoundData] = [
-        RoundData(round: 1, secondsOnTheClock: nil, roundChangeMessage: "15 Seconds!", pointValue: 1),
-        RoundData(round: 2, secondsOnTheClock: 15, roundChangeMessage: "Adding More Letters", pointValue: 1),
+        RoundData(round: 1, secondsOnTheClock: nil, roundChangeMessage: "Adding a Time Limit!", pointValue: 1),
+        RoundData(round: 2, secondsOnTheClock: 3, roundChangeMessage: "Adding More Letters", pointValue: 1),
         RoundData(round: 3, secondsOnTheClock: 15, roundChangeMessage: "Adding More Letters", pointValue: 2),
         RoundData(round: 4, secondsOnTheClock: 15, roundChangeMessage: "Adding More Letters", pointValue: 5),
         RoundData(round: 5, secondsOnTheClock: 15, roundChangeMessage: "Adding More Letters", pointValue: 7),

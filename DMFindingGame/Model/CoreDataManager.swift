@@ -8,18 +8,33 @@
 import CoreData
 
 class CoreDataManager {
+    //MARK: - Setup
     static let shared = CoreDataManager()
     
-    let persistentContainer: NSPersistentContainer = {
-        let container = NSPersistentContainer(name: "Main")
+    lazy var persistentContainer: NSPersistentContainer = {
+        let container = NSPersistentContainer(name: "DataModel")
         
         container.loadPersistentStores { (storeDescription, error) in
             if let error = error {
-                fatalError("Fatal error loading store: \(error.localizedDescription)")
+                fatalError("Fatal error loading DataModel: \(error.localizedDescription)")
             }
         }
         return container
     }()
+    
+    func saveContext () {
+        let context = persistentContainer.viewContext
+        if context.hasChanges {
+            do{
+                try context.save()
+            } catch {
+                let nsError = error as NSError
+                fatalError("Unresolved error \(nsError), \(nsError.localizedDescription)")
+            }
+        }
+    }
+    
+    //MARK: - CRUD
     
     /**
      Add the passed score to CoreData.
@@ -41,4 +56,7 @@ class CoreDataManager {
     func calculateHighScore() -> Int {
         return 0
     }
+    
+
+    
 }

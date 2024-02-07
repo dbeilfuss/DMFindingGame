@@ -14,6 +14,7 @@ class GameModel {
     let roundManager = RoundManager()
     let timerManager = TimerManager()
     let handManager = HandManager()
+    let dataManager = CoreDataManager()
     
     var pointValue = 1
     var roundScore = 0
@@ -68,6 +69,14 @@ class GameModel {
         } else {
             print("Not a Win")
             return false
+        }
+    }
+    
+    func saveHighScore (username: String?) {
+        if let safeUsername: String = username {
+            print (safeUsername)
+        } else {
+            print("No username entered")
         }
     }
     

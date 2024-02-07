@@ -8,6 +8,8 @@
 import UIKit
 
 class GameViewController: UIViewController {
+
+    
     
     @IBOutlet weak var targetLetterLabel: UILabel!
     @IBOutlet var letterButtons: [UIButton]!
@@ -21,6 +23,7 @@ class GameViewController: UIViewController {
     var timesUp = false
     
     let gameModel = GameModel()
+    let saveHighScoreAlertController = SaveHighScoreAlertController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,9 +50,10 @@ class GameViewController: UIViewController {
                 self?.timerLabel.text = "\(secondsRemaining)"
                 
             } else if secondsRemaining <= 0 {
-                self?.timerLabel.text = "Time's Up!"
-                self?.timesUp = true
-                self?.revealViews(views: [self!.doneButton! as UIView])
+                self!.timerLabel.text = "Time's Up!"
+                self!.timesUp = true
+                self!.saveHighScoreAlertController.saveHighScore(gameModel: self!.gameModel, viewController: self!)
+//                self!.revealViews(views: [self!.doneButton as UIView])
             }
         }
         }
@@ -122,6 +126,13 @@ class GameViewController: UIViewController {
     }
     
     
+    
+    func displayVictoryMessage () {
+        let victoryMessage = "\(gameModel.responseEmoji(didAnswerCorrectly: true))\(gameModel.responseEmoji(didAnswerCorrectly: true))\(gameModel.responseEmoji(didAnswerCorrectly: true))"
+        targetLetterLabel.text = victoryMessage
+    }
+    
+    
     //MARK: - Buttons
     
     @IBAction func letterButtonTapped(_ sender: UIButton) {
@@ -135,11 +146,7 @@ class GameViewController: UIViewController {
             let didWin = gameModel.checkForWin()
             
             if didWin {
-                
-                // Victory Message
-                let victoryMessage = "\(gameModel.responseEmoji(didAnswerCorrectly: true))\(gameModel.responseEmoji(didAnswerCorrectly: true))\(gameModel.responseEmoji(didAnswerCorrectly: true))"
-                targetLetterLabel.text = victoryMessage
-                                                
+                displayVictoryMessage()
             }
             else {
                 newHand(didAnswerCorrectly: isCorrect)
@@ -173,6 +180,5 @@ class GameViewController: UIViewController {
     @IBAction func doneButtonTapped(_ sender: UIButton) {
         self.dismiss(animated: true)
     }
-    
     
 }
