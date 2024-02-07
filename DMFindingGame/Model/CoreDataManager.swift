@@ -10,6 +10,11 @@ import CoreData
 class CoreDataManager {
     //MARK: - Setup
     static let shared = CoreDataManager()
+    var context: NSManagedObjectContext?
+    
+    init () {
+        context = persistentContainer.viewContext
+    }
     
     lazy var persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: "DataModel")
@@ -23,10 +28,10 @@ class CoreDataManager {
     }()
     
     func saveContext () {
-        let context = persistentContainer.viewContext
-        if context.hasChanges {
+//        CoreDataManager.context = persistentContainer.viewContext
+        if context!.hasChanges {
             do{
-                try context.save()
+                try context!.save()
             } catch {
                 let nsError = error as NSError
                 fatalError("Unresolved error \(nsError), \(nsError.localizedDescription)")
@@ -39,8 +44,12 @@ class CoreDataManager {
     /**
      Add the passed score to CoreData.
      */
-    func addScore(score: Int) {
-        
+    func addScore(playerName: String, score: Int) {
+        let newHighScore: HighScore = HighScore(context: context!)
+        newHighScore.playerName = playerName
+        newHighScore.score = Int16(score)
+        print("highScore Data: \(newHighScore)")
+        saveContext()
     }
     
     /**

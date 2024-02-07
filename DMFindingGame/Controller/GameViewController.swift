@@ -53,7 +53,6 @@ class GameViewController: UIViewController {
                 self!.timerLabel.text = "Time's Up!"
                 self!.timesUp = true
                 self!.saveHighScoreAlertController.saveHighScore(gameModel: self!.gameModel, viewController: self!)
-//                self!.revealViews(views: [self!.doneButton as UIView])
             }
         }
         }
@@ -124,8 +123,6 @@ class GameViewController: UIViewController {
         let activeButtons = letterButtons.filter { $0.tag <= round }
         return activeButtons
     }
-    
-    
     
     func displayVictoryMessage () {
         let victoryMessage = "\(gameModel.responseEmoji(didAnswerCorrectly: true))\(gameModel.responseEmoji(didAnswerCorrectly: true))\(gameModel.responseEmoji(didAnswerCorrectly: true))"

@@ -12,10 +12,10 @@ class SaveHighScoreAlertController {
     func saveHighScore (gameModel: GameModel, viewController: UIViewController) {
         let score = gameModel.gameScore
         requestUserName(score: score, viewController: viewController) { [weak viewController] username in
-            guard let self = viewController, let username = username else {
+            guard let username = username else {
                 return
             }
-            gameModel.saveHighScore(username: username)
+            gameModel.saveHighScore(playerName: username)
             viewController?.dismiss(animated: true)
         }
         

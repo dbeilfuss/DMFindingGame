@@ -14,7 +14,7 @@ class GameModel {
     let roundManager = RoundManager()
     let timerManager = TimerManager()
     let handManager = HandManager()
-    let dataManager = CoreDataManager()
+    let coreDataManager = CoreDataManager()
     
     var pointValue = 1
     var roundScore = 0
@@ -72,12 +72,8 @@ class GameModel {
         }
     }
     
-    func saveHighScore (username: String?) {
-        if let safeUsername: String = username {
-            print (safeUsername)
-        } else {
-            print("No username entered")
-        }
+    func saveHighScore (playerName: String) {
+        coreDataManager.addScore(playerName: playerName, score: gameScore)
     }
     
     func responseEmoji(didAnswerCorrectly: Bool) -> String {
