@@ -38,7 +38,6 @@ class GameViewController: UIViewController {
     }
     
     func initializeGame() {
-//        goalLabel.text = "Goal: \(gameModel.goal)"
         gameModel.newRound(lettersNeeded: activeLetterButtons.count)
         self.newHand(didAnswerCorrectly: true)
         

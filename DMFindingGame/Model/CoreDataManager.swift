@@ -28,7 +28,6 @@ class CoreDataManager {
     }()
     
     func saveContext () {
-//        CoreDataManager.context = persistentContainer.viewContext
         if context!.hasChanges {
             do{
                 try context!.save()
@@ -41,31 +40,32 @@ class CoreDataManager {
     
     //MARK: - CRUD
     
-    /**
-     Add the passed score to CoreData.
-     */
     func addScore(playerName: String, score: Int) {
         let newHighScore: HighScore = HighScore(context: context!)
         newHighScore.playerName = playerName
         newHighScore.score = Int16(score)
-        print("highScore Data: \(newHighScore)")
         saveContext()
     }
-    
-    /**
-     Retrieve all the scores from CoreData.
-     */
-//    func fetchScores() -> [Score] {
-//        return []
-//    }
-    
-    /**
-     Calculate the high score.
-     */
-    func calculateHighScore() -> Int {
-        return 0
+
+    func fetchAllScores() -> [HighScore] {
+        var highScoresArray: [HighScore] = []
+        let request : NSFetchRequest<HighScore> = HighScore.fetchRequest()
+        do {
+            try highScoresArray = context!.fetch(request)
+        } catch {
+            print("error fetching data from context: \(error)")
+        }
+        highScoresArray = highScoresArray.sorted { $0.score > $1.score } // sort descending
+        return highScoresArray
     }
     
-
+    func fetchHighScore() -> Int {
+        let highScoresAray = fetchAllScores()
+        var highScore: Int = 0
+        if highScoresAray.count > 0 {
+            highScore = Int(highScoresAray[0].score)}
+        
+        return highScore
+    }
     
 }
