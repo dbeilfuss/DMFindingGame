@@ -25,6 +25,8 @@ class GameViewController: UIViewController {
     let gameModel = GameModel()
     let saveHighScoreAlertController = SaveHighScoreAlertController()
     
+    //MARK: - Initilization
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         initializeUIViews()
@@ -38,24 +40,11 @@ class GameViewController: UIViewController {
     }
     
     func initializeGame() {
-        gameModel.newRound(lettersNeeded: activeLetterButtons.count)
+        gameModel.newRound(lettersNeeded: activeLetterButtons.count, timerDelegate: self)
         self.newHand(didAnswerCorrectly: true)
-        
-        // Timer Callback
-        gameModel.timerManager.updateTimerLabel = { [weak self] secondsRemaining in DispatchQueue.main.async {
-            if secondsRemaining > 0 {
-                
-                // update timerLabel
-                self?.timerLabel.text = "\(secondsRemaining)"
-                
-            } else if secondsRemaining <= 0 {
-                self!.timerLabel.text = "Time's Up!"
-                self!.timesUp = true
-                self!.saveHighScoreAlertController.saveHighScore(gameModel: self!.gameModel, viewController: self!)
-            }
-        }
-        }
     }
+    
+    //MARK: - View Visibility
     
     func resetGameScreen(didWin: Bool) {
         print("resetting game screen: didWin: \(didWin)")
@@ -86,11 +75,20 @@ class GameViewController: UIViewController {
         }
     }
     
+    
+    //MARK: - Game Functionality
+    
     func newHand(didAnswerCorrectly: Bool) {
         print("VC: newHand")
         let newHand: Hand = gameModel.newHand(lettersNeededCount: activeLetterButtons.count)
         updateTargetLetterLabel(didAnswerCorrectly: didAnswerCorrectly, targetLetter: newHand.targetLetter)
         updateLetterButtons(letters: newHand.availableLetters)
+    }
+    
+    func getActiveLetterButtons(round: Int) -> [UIButton] {
+        print("getting active letter buttons")
+        let activeButtons = letterButtons.filter { $0.tag <= round }
+        return activeButtons
     }
     
     func updateTargetLetterLabel(didAnswerCorrectly: Bool, targetLetter: String) {
@@ -100,7 +98,6 @@ class GameViewController: UIViewController {
         timerLabel.text = responseEmoji
         
         targetLetterLabel.text = targetLetter
-        
     }
     
     func updateLetterButtons(letters: [String]) {
@@ -117,18 +114,12 @@ class GameViewController: UIViewController {
         scoreLabel.text = "Score: \(gameModel.gameScore)"
     }
     
-    func getActiveLetterButtons(round: Int) -> [UIButton] {
-        print("getting active letter buttons")
-        let activeButtons = letterButtons.filter { $0.tag <= round }
-        return activeButtons
-    }
-    
     func displayVictoryMessage () {
         let victoryMessage = "\(gameModel.responseEmoji(didAnswerCorrectly: true))\(gameModel.responseEmoji(didAnswerCorrectly: true))\(gameModel.responseEmoji(didAnswerCorrectly: true))"
         targetLetterLabel.text = victoryMessage
     }
     
-    
+
     //MARK: - Buttons
     
     @IBAction func letterButtonTapped(_ sender: UIButton) {
@@ -167,7 +158,7 @@ class GameViewController: UIViewController {
     }
     
     @IBAction func nextRoundButtonTapped(_ sender: UIButton) {
-        gameModel.newRound(lettersNeeded: activeLetterButtons.count)
+        gameModel.newRound(lettersNeeded: activeLetterButtons.count, timerDelegate: self)
         activeLetterButtons = getActiveLetterButtons(round: gameModel.round)
         resetGameScreen(didWin: false)
         newHand(didAnswerCorrectly: true)
@@ -175,6 +166,25 @@ class GameViewController: UIViewController {
     
     @IBAction func doneButtonTapped(_ sender: UIButton) {
         self.dismiss(animated: true)
+    }
+    
+}
+
+
+//MARK: - Extension: TimerDelegate
+
+extension GameViewController: TimerDelegate {
+    func updateTimeLabel(timeRemaining: Int) {
+        if timeRemaining > 0 {
+            
+            // update timerLabel
+            timerLabel.text = "\(timeRemaining)"
+            
+        } else {
+            timerLabel.text = "Time's Up!"
+            timesUp = true
+            saveHighScoreAlertController.saveHighScore(gameModel: gameModel, viewController: self)
+        }
     }
     
 }

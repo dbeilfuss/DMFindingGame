@@ -9,13 +9,14 @@ import Foundation
 
 class TimerManager {
     
+    var delegate: TimerDelegate?
+    
     var secondsOnTheClock: Int? = 15
     var secondsRemaining = 0
     var timer: Timer?
     var updateTimerLabel: ((Int) -> Void)? // Callback
     
     func setTimer() {
-        
         timer?.invalidate() // kill the timer if it is already running
         
         if let secondsOnTheClock = self.secondsOnTheClock {
@@ -26,7 +27,7 @@ class TimerManager {
     }
     
     @objc func updateTimer() {
-        updateTimerLabel?(secondsRemaining)
+        delegate?.updateTimeLabel(timeRemaining: secondsRemaining)
         if secondsRemaining > 0 {
             secondsRemaining -= 1
         } else {
@@ -43,4 +44,8 @@ class TimerManager {
         timer?.invalidate()
     }
     
+}
+
+protocol TimerDelegate {
+    func updateTimeLabel(timeRemaining: Int)
 }

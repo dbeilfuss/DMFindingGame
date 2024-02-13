@@ -12,7 +12,7 @@ import UIKit
 class GameModel {
     
     let roundManager = RoundManager()
-    let timerManager = TimerManager()
+    var timerManager = TimerManager()
     let handManager = HandManager()
     let coreDataManager = CoreDataManager()
     
@@ -23,7 +23,7 @@ class GameModel {
     var round = 0
     var roundChangeMessage = "Find 5 Letters!"
     
-    func newRound(lettersNeeded: Int) {
+    func newRound(lettersNeeded: Int, timerDelegate: TimerDelegate) {
         print("GM: newRound: round: \(round)")
 
         round += 1
@@ -35,6 +35,7 @@ class GameModel {
         
         roundScore = 0
         
+        timerManager.delegate = timerDelegate
         timerManager.setTimer()
     }
     
@@ -90,5 +91,4 @@ class GameModel {
         
         return emoji
     }
-    
 }
